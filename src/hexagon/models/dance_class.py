@@ -6,6 +6,7 @@ from hexagon.models.exceptions import (
     DanceClassAlreadyBooked,
     DanceClassFull,
     DanceClassNotCancelable,
+    DanceClassCanceled,
 )
 
 
@@ -23,6 +24,10 @@ class DanceClass:
     @property
     def end_time(self):
         return self.start_time + timedelta(minutes=self.duration)
+
+    @property
+    def is_canceled(self):
+        return self.canceled_at is not None
 
     @staticmethod
     def schedule(
@@ -51,6 +56,9 @@ class DanceClass:
         self.canceled_at = canceled_at
 
     def book(self, student_id: UUID):
+        if self.is_canceled:
+            raise DanceClassCanceled
+
         if student_id in self.student_ids:
             raise DanceClassAlreadyBooked
 

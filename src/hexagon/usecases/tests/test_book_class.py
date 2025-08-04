@@ -4,6 +4,7 @@ from hexagon.models.dance_class import DanceClass
 from hexagon.models.exceptions import (
     DanceClassAlreadyBooked,
     DanceClassFull,
+    DanceClassCanceled,
     NotEnoughBalance,
 )
 from hexagon.usecases.book_class import BookClassUseCase
@@ -107,6 +108,28 @@ def test_can_book_class_if_credit_expires_on_or_after_class_date(context, expire
             start_time=datetime(2025, 1, 1),
         ),
     ]
+
+
+def test_cannot_book_canceled_class(context):
+    context["dance_class_repository"].feed_with(
+        [
+            DanceClass(
+                id=euuid("class"),
+                studio_id=euuid("studio"),
+                room_id=euuid("room"),
+                duration=60,
+                student_ids=[],
+                max_capacity=10,
+                start_time=datetime(2025, 1, 1),
+                canceled_at=datetime(2025, 1, 1),
+            ),
+        ]
+    )
+
+    given_a_student(context, credits=[Credit(id=uuid4(), expires_at=None)])
+
+    with pytest.raises(DanceClassCanceled):
+        when_i_book_the_class(context, student_id=euuid("student"))
 
 
 def given_a_dance_class(context, max_capacity: int, student_ids: list[UUID]):

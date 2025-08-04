@@ -2,6 +2,10 @@ class DanceClassAlreadyBooked(Exception):
     pass
 
 
+class DanceClassCanceled(Exception):
+    pass
+
+
 class DanceClassFull(Exception):
     pass
 
