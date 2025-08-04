@@ -8,3 +8,7 @@ class DanceClassFull(Exception):
 
 class NotEnoughBalance(Exception):
     pass
+
+
+class StudioRoomAlreadyExists(Exception):
+    pass

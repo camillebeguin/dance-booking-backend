@@ -9,9 +9,13 @@ class Credit:
     expires_at: date | None = None
 
     def is_expired(self, at_date: date) -> bool:
+        """
+        Expiry date is exclusive, the credit is expired from the day after the expiry date.
+        """
         if self.expires_at is None:
             return False
-        return self.expires_at <= at_date
+
+        return self.expires_at < at_date
 
 
 @dataclass
