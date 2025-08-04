@@ -2,7 +2,7 @@ from payment.hexagon.gateways.repositories.order_repository import OrderReposito
 from payment.hexagon.models.order import Order
 
 
-class OrderCreditUseCase:
+class CreateOrderUseCase:
     def __init__(self, order_repository: OrderRepository):
         self.order_repository = order_repository
 

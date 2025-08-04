@@ -1,4 +1,4 @@
-from payment.hexagon.usecases.order_credit import OrderCreditUseCase
+from payment.hexagon.usecases.create_order import CreateOrderUseCase
 import pytest
 from shared_kernel.utils import euuid
 from payment.hexagon.models.order import Order, OrderStatus
@@ -14,10 +14,10 @@ def context():
     }
 
 
-def test_can_order_single_credit(context):
+def test_can_create_order(context):
     context["order_repository"].feed_with([])
 
-    OrderCreditUseCase(
+    CreateOrderUseCase(
         order_repository=context["order_repository"],
     ).execute(
         order_id=euuid("order"),
