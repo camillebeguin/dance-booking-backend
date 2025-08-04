@@ -12,3 +12,7 @@ class NotEnoughBalance(Exception):
 
 class StudioRoomAlreadyExists(Exception):
     pass
+
+
+class StudioRoomUnavailable(Exception):
+    pass

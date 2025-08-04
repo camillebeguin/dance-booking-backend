@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from uuid import UUID
 
 from hexagon.models.exceptions import DanceClassAlreadyBooked, DanceClassFull
@@ -14,6 +14,10 @@ class DanceClass:
     start_time: datetime
     duration: int
     max_capacity: int
+
+    @property
+    def end_time(self):
+        return self.start_time + timedelta(minutes=self.duration)
 
     @staticmethod
     def schedule(

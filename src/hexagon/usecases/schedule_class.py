@@ -1,10 +1,11 @@
 from hexagon.gateways.repositories.studio_repository import StudioRepository
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timedelta
 from uuid import UUID
 from hexagon.models.dance_class import DanceClass
 from hexagon.gateways.repositories.dance_class_repository import DanceClassRepository
 from shared_kernel.utils import euuid
+from hexagon.models.exceptions import StudioRoomUnavailable
 
 
 class ScheduleDanceClassInput(BaseModel):
@@ -27,6 +28,17 @@ class ScheduleClassUseCase:
     def execute(self, input: ScheduleDanceClassInput):
         studio = self.studio_repository.get_by_id(input.studio_id)
         room = next(room for room in studio.rooms if room.id == input.room_id)
+
+        # The room is unavailable if there is an overlapping class already scheduled.
+        end_time = input.start_time + timedelta(minutes=input.duration)
+
+        if self.dance_class_repository.find_overlapping_classes(
+            studio_id=input.studio_id,
+            room_id=input.room_id,
+            start_time=input.start_time,
+            end_time=end_time,
+        ):
+            raise StudioRoomUnavailable
 
         dance_class = DanceClass.schedule(
             id=euuid("class"),
