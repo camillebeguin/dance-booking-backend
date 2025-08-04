@@ -6,5 +6,5 @@ class DeterministicDateProvider(DateProvider):
     def __init__(self, current_date: datetime):
         self.current_date = current_date
 
-    def today(self) -> datetime:
+    def now(self) -> datetime:
         return self.current_date

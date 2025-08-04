@@ -1,6 +1,6 @@
 from typing import Protocol
-from datetime import date
+from datetime import datetime
 
 
 class DateProvider(Protocol):
-    def today(self) -> date: ...
+    def now(self) -> datetime: ...

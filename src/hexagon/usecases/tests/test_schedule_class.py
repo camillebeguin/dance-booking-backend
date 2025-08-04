@@ -26,6 +26,21 @@ def test_can_schedule_class(context):
     # given a studio
     given_a_studio(context, room_capacity=10)
 
+    # given a non-overlapping class
+    context["dance_class_repository"].feed_with(
+        [
+            DanceClass(
+                id=euuid("class"),
+                studio_id=euuid("studio"),
+                room_id=euuid("room"),
+                start_time=datetime(2025, 1, 2, 10, 0, 0),
+                duration=60,
+                max_capacity=10,
+                student_ids=[],
+            ),
+        ]
+    )
+
     # when i schedule a class
     ScheduleClassUseCase(
         studio_repository=context["studio_repository"],

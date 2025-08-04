@@ -2,7 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from uuid import UUID
 
-from hexagon.models.exceptions import DanceClassAlreadyBooked, DanceClassFull
+from hexagon.models.exceptions import (
+    DanceClassAlreadyBooked,
+    DanceClassFull,
+    DanceClassNotCancelable,
+)
 
 
 @dataclass
@@ -14,6 +18,7 @@ class DanceClass:
     start_time: datetime
     duration: int
     max_capacity: int
+    canceled_at: datetime | None = None
 
     @property
     def end_time(self):
@@ -36,7 +41,14 @@ class DanceClass:
             duration=duration,
             max_capacity=max_capacity,
             student_ids=[],
+            canceled_at=None,
         )
+
+    def cancel(self, canceled_at: datetime):
+        if self.start_time <= canceled_at:
+            raise DanceClassNotCancelable
+
+        self.canceled_at = canceled_at
 
     def book(self, student_id: UUID):
         if student_id in self.student_ids:

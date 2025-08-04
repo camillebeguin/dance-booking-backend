@@ -16,3 +16,7 @@ class StudioRoomAlreadyExists(Exception):
 
 class StudioRoomUnavailable(Exception):
     pass
+
+
+class DanceClassNotCancelable(Exception):
+    pass
