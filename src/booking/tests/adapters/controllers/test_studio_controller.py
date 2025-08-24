@@ -17,4 +17,3 @@ def test_can_create_studio(test_client: TestClient):
         },
     )
     assert response.status_code == 201
-    breakpoint()

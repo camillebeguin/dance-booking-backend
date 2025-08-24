@@ -5,10 +5,10 @@ from booking.adapters.gateways.repositories.sql_studio_repository import (
 from booking.hexagon.models.studio import Studio, StudioAddress
 from sqlalchemy.orm import Session
 from uuid import uuid4
-from booking.adapters.gateways.repositories.sql_entities.sql_studio import SqlStudio
 
 
 def test_can_create_studio(test_session: Session):
+    # WHEN I save a new studio
     repository = SqlStudioRepository(session=test_session)
 
     studio = Studio(
@@ -25,9 +25,10 @@ def test_can_create_studio(test_session: Session):
     )
     repository.save(studio)
 
-    sql_studio = test_session.query(SqlStudio).filter(SqlStudio.id == studio.id).first()
+    # THEN I can retrieve it by id
+    sql_studio = repository.get_by_id(studio.id)
 
-    assert sql_studio is not None
+    # THEN the studio has been persisted
     assert sql_studio.name == studio.name
 
     # Address has been created
@@ -38,4 +39,4 @@ def test_can_create_studio(test_session: Session):
     assert sql_studio.address.country == studio.address.country
 
     # No rooms have been created yet
-    assert sql_studio.studio_rooms == []
+    assert sql_studio.rooms == []
