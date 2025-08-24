@@ -6,11 +6,14 @@ authors = [
     {name = "Camille Beguin",email = "camille.beguin@dashdoc.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4.0"
 dependencies = [
     "fastapi (>=0.116.1,<0.117.0)",
     "pytest (>=8.4.1,<9.0.0)",
-    "pydantic (>=2.11.7,<3.0.0)"
+    "pydantic (>=2.11.7,<3.0.0)",
+    "sqlalchemy (>=2.0.43,<3.0.0)",
+    "alembic (>=1.16.4,<2.0.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)"
 ]
 
 
@@ -20,3 +23,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.poetry.group.dev.dependencies]
+testcontainers = "^4.12.0"
+

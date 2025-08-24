@@ -34,7 +34,7 @@ class ScheduleClassUseCase:
         # The room is unavailable if there is an overlapping class already scheduled.
         end_time = input.start_time + timedelta(minutes=input.duration)
 
-        if self.dance_class_repository.find_overlapping_classes(
+        if self.dance_class_repository.has_overlapping_classes(
             studio_id=input.studio_id,
             room_id=input.room_id,
             start_time=input.start_time,

@@ -21,6 +21,7 @@ class Credit:
 @dataclass
 class Student:
     id: UUID
+    # TODO: remove credits from aggregate?
     credits: list[Credit]
 
     def balance(self, at_date: date) -> int:

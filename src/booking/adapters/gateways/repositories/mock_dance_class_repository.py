@@ -26,14 +26,14 @@ class MockDanceClassRepository(DanceClassRepository):
             None,
         )
 
-    def find_overlapping_classes(
+    def has_overlapping_classes(
         self,
         studio_id: UUID,
         room_id: UUID,
         start_time: datetime,
         end_time: datetime,
-    ) -> list[DanceClass]:
-        return [
+    ) -> bool:
+        return any(
             dance_class
             for dance_class in self.dance_classes
             if (
@@ -44,4 +44,4 @@ class MockDanceClassRepository(DanceClassRepository):
                     and dance_class.end_time > start_time
                 )
             )
-        ]
+        )

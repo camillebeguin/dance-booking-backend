@@ -9,10 +9,10 @@ class DanceClassRepository(Protocol):
 
     def get_by_id(self, id: UUID) -> DanceClass: ...
 
-    def find_overlapping_classes(
+    def has_overlapping_classes(
         self,
         studio_id: UUID,
         room_id: UUID,
         start_time: datetime,
         end_time: datetime,
-    ) -> list[DanceClass]: ...
+    ) -> bool: ...
