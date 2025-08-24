@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from src.booking.adapters.dependencies.get_session import get_db_session
-from src.booking.adapters.gateways.repositories.sql_studio_repository import (
+from booking.adapters.dependencies.get_session import get_db_session
+from booking.adapters.gateways.repositories.sql_studio_repository import (
     SqlStudioRepository,
 )
-from src.booking.hexagon.usecases.create_studio import (
+from booking.hexagon.usecases.create_studio import (
     CreateStudioUseCase,
     CreateStudioInput,
 )
@@ -18,7 +18,7 @@ def get_create_studio_use_case(session: Session = Depends(get_db_session)):
     )
 
 
-@studio_router.post("")
+@studio_router.post("", status_code=201, response_model=None)
 def create_studio(
     studio: CreateStudioInput,
     use_case: CreateStudioUseCase = Depends(get_create_studio_use_case),

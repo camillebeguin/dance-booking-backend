@@ -6,7 +6,7 @@ from fastapi import Depends
 
 
 def get_db_url() -> str:
-    return "postgresql+psycopg2://dev:dev@localhost:5432/ubertdd"
+    return "postgresql+psycopg2://dev:dev@localhost:5432/booking-db"
 
 
 def get_db_session(db_url: str = Depends(get_db_url)) -> Generator[Session, None, None]:
