@@ -26,17 +26,17 @@ def test_can_create_studio(test_session: Session):
     repository.save(studio)
 
     # THEN I can retrieve it by id
-    sql_studio = repository.get_by_id(studio.id)
+    saved_studio = repository.get_by_id(studio.id)
 
     # THEN the studio has been persisted
-    assert sql_studio.name == studio.name
+    assert saved_studio.name == studio.name
 
     # Address has been created
-    assert sql_studio.address.street == studio.address.street
-    assert sql_studio.address.city == studio.address.city
-    assert sql_studio.address.state == studio.address.state
-    assert sql_studio.address.zip_code == studio.address.zip_code
-    assert sql_studio.address.country == studio.address.country
+    assert saved_studio.address.street == studio.address.street
+    assert saved_studio.address.city == studio.address.city
+    assert saved_studio.address.state == studio.address.state
+    assert saved_studio.address.zip_code == studio.address.zip_code
+    assert saved_studio.address.country == studio.address.country
 
     # No rooms have been created yet
-    assert sql_studio.rooms == []
+    assert saved_studio.rooms == []
