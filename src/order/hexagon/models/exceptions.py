@@ -1,0 +1,2 @@
+class OrderAlreadyConfirmedException(Exception):
+    pass
